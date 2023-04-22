@@ -1,0 +1,2 @@
+class WorkoutTagsController < ApplicationController
+end
