@@ -15,8 +15,8 @@
   end
 
 
-Workout.create(title: "Bodyweight Cardio Workout with High and Low Impact Modifications", description: "I found this to be an excellent workout", warmup: true, cooldown: true, duration: 30, video_url: "https://https://www.youtube.com/watch?v=5mCcUndJMo8&t=916s", user_id: 1)
+Workout.create(title: "Bodyweight Cardio Workout with High and Low Impact Modifications", description: "I found this to be an excellent workout", warmup: true, cooldown: true, duration: 30, video_url: "https://www.youtube.com/watch?v=5mCcUndJMo8&t=916s", user_id: 1)
 
 Workout.create(title: "HIIT Workout", description: "A high-intensity interval training routine for a full-body workout",warmup: true, cooldown: true, duration: 45, video_url: "https://www.youtube.com/watch?v=ml6cT4AZdqI", user_id: 2)
 
-Workout.create(title: "Cardio Kickboxing Workout", description: "25 Minute Kickboxing Cardio Interval Workout", warmup: true, cooldown: true, duration: 25, video_url: "https://https://www.youtube.com/watch?v=Vve4BVTZ0QU", user_id: 1)
+Workout.create(title: "Cardio Kickboxing Workout", description: "25 Minute Kickboxing Cardio Interval Workout", warmup: true, cooldown: true, duration: 25, video_url: "https://www.youtube.com/watch?v=Vve4BVTZ0QU", user_id: 1)
