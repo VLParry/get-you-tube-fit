@@ -10,10 +10,26 @@ class WorkoutsController < ApplicationController
         render json: workout, status: 200
     end
 
+    def create  
+        # user = User.find(params[:user_id])
+        workout = @current_user.workouts.create!(workout_params)
+        render json: workout, status: :created
+    end
+
+    def update
+        workout = Workout.find(params[:id])
+        if workout.user == @current_user
+            workout.update(workout_params)
+            render json: workout 
+        else
+            render json: { error: 'Not Authorized' }, status: :unauthorized
+        end
+    end
+
     private
 
     def workout_params
-        params.permit(:title, :description, :duration, :warmup, :cooldown, :video_url)
+        params.permit(:user_id, :title, :description, :duration, :warmup, :cooldown, :video_url, :tags)
     end
 
     def find_workout
