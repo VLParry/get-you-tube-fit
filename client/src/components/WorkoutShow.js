@@ -12,12 +12,13 @@ const WorkoutShow = () => {
         .then((response) => response.json())
         .then((data) => setWorkout(data));
     }, [id]);
+   
   
     if (!workout) {
       return <div>Loading...</div>;
     }
   
-    const { title, description, video_url } = workout;
+    // const { title, description, video_url } = workout;
     const opts = {
       height: '360',
       width: '640',
@@ -48,6 +49,13 @@ const WorkoutShow = () => {
           </Typography>
           <Typography variant="body1">
             Cooldown? {workout.cooldown ? 'Yes' : 'No'}
+          </Typography>
+          <Typography variant="body1">
+            Tags: 
+        {workout.tags.map((tag) => (
+          <li key={tag.id}>{tag.name}</li>
+        ))}
+      
           </Typography>
           <div style={{ marginTop: 16 }}>
             <YouTube videoId={getVideoId(workout.video_url)} opts={opts} />
