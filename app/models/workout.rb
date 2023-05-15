@@ -1,6 +1,6 @@
 class Workout < ApplicationRecord
   belongs_to :user
-  has_many :workout_tags
+  has_many :workout_tags, dependent: :destroy
   has_many :tags, through: :workout_tags
 
   validates :title, presence: true, length: { maximum: 100 }
