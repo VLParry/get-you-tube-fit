@@ -7,7 +7,8 @@ class TagsController < ApplicationController
 
     def show
         tag = Tag.find(params[:id])
-        render json: tag
+        workouts = tag.workouts_with_tag
+        render json: workouts
     end
 
     def create  
