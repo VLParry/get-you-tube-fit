@@ -14,6 +14,10 @@ class UsersController < ApplicationController
         render json: @current_user
     end
 
+    def index 
+        render json: User.all 
+    end
+
     private
 
     def user_params
