@@ -21,7 +21,7 @@ const NavBar = ( {loggedIn, handleLogout} ) => {
   // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuEl, setMenuEl] = React.useState(null);
-  const {user, setUser} = useUserContext()
+  const {user} = useUserContext()
   const navigate = useNavigate();
 
 
@@ -65,7 +65,7 @@ const NavBar = ( {loggedIn, handleLogout} ) => {
         label={loggedIn ? 'Logout' : 'Login'}
       />
     </FormGroup>
-    <AppBar sx={{ bgcolor: "red" }} position="static">
+    <AppBar sx={{ bgcolor: "red", borderRadius: 4 }} position="static">
       <Toolbar>
         <div>
         <IconButton
