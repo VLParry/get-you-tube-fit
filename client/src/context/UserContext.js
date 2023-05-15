@@ -11,7 +11,7 @@ const UserContext = createContext({
    });
    //11-20 when you connect it is saying what the state will be. after we create out context we create a new state that will essentially be the provider 
 export default function UserContextProvider ({children}) {
-    const [user, setUser] = useState({activities: []})
+    const [user, setUser] = useState({workouts: []})
     return (
 
         <UserContext.Provider value={{user, setUser }}>
