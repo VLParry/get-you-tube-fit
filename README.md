@@ -2,7 +2,6 @@
 ## One common challenge for people looking to get in shape is the overwhelming number of workout videos on YouTube. With so many options, it can be difficult to find the perfect workout that meets your specific needs.
 ## To help address this issue, this project aims to create a platform where users can easily add and manage their favorite YouTube workout videos. Users can simply enter the YouTube URL and choose tags to categorize their workout, making it easy to share with others who are looking for videos in those categories.
 ## Ditch the intimidating YouTube search results and find the perfect workouts to help you reach your fitness goals with Get You(tube) Fit! 
-![Alt Text](Screen Shot 2023-06-08 at 2.22.03 PM.png)
 Installation  | 
 ------------- | 
 1. Fork and clone this repo to your local machine
