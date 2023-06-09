@@ -54,6 +54,13 @@ const AddWorkout = ({tags, handleAddWorkout}) => {
         r.json().then((addedWorkout) => {
           handleAddWorkout(addedWorkout);
         setOpen(false);
+        setTitle("");
+        setDescription("");
+        setWarmup("no");
+        setCooldown("no");
+        setDuration(0);
+        setVideoUrl("");
+        setSelectedTags([]);
         });
       }
       else{
@@ -61,6 +68,7 @@ const AddWorkout = ({tags, handleAddWorkout}) => {
           setErrors(err.errors);
           setOpen(true); 
           // Keep the modal open on error
+         
         });
     }})
 

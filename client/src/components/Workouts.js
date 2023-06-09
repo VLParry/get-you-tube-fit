@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import YouTube from 'react-youtube';
-import { Grid, Card, CardContent, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import { Grid, Card, CardContent, Typography, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import AddWorkout from './AddWorkout';
 
 

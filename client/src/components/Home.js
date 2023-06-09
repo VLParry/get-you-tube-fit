@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import { useUserContext } from '../context/UserContext';
 import YouTube from 'react-youtube';
 import { Link } from 'react-router-dom';
-import { Typography, Grid, Button } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 
 
 //The API component will pass an event object as the sole argument to each of those functions the event handler props. The event object has the following properties:
