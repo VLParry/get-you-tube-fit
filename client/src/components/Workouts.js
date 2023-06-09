@@ -3,15 +3,14 @@ import YouTube from 'react-youtube';
 import { Grid, Card, CardContent, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import AddWorkout from './AddWorkout';
 
-//should I pass the workout state and addworkout from App or ok to go through workouts?
 
 
-const Workouts = ( {workouts, setWorkouts, handleAddWorkout, tags, setTags} ) => {
+const Workouts = ( {loggedIn, workouts, setWorkouts, handleAddWorkout, tags} ) => {
 const [durationFilter, setDurationFilter] = useState('all');
 
     const opts = {
-        height: '360',
-        width: '640',
+        height: '180',
+        width: '320',
         playerVars: {
           autoplay: 0,
         },
@@ -52,33 +51,22 @@ const [durationFilter, setDurationFilter] = useState('all');
           <MenuItem value="45-90">45+ minutes</MenuItem>
         </Select>
       </FormControl>
-      <AddWorkout 
+      {loggedIn && <AddWorkout 
       key={workouts.id}
       workout={workouts}
       setWorkouts={setWorkouts}
       handleAddWorkout={handleAddWorkout}
       tags={tags}
-      setTags={setTags} />
-        {/* <ul>
-      {workouts.map(workout => (
-
-    <li key={workout.id}>
-        <h2>{workout.title}</h2>
-        <p>{workout.description}</p>
-        <YouTube videoId={getVideoId(workout.video_url)} opts={opts} />
-
-      
-    </li>
-))}
-</ul> */}
-    <Grid container spacing={2} style={{ display: 'flex' }} >
+     />}
+   
+    <Grid container spacing={2} >
       {filteredWorkouts.map((workout) => (
        <Grid key={workout.id} item xs={12} sm={6} md={4}>
        <Card>
          <CardContent>
-           <Typography gutterBottom variant="h5" component="h2">
+           <Typography gutterBottom variant="h5" component="h2" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
            <a href={`/workouts/${workout.id}`}>{workout.title}</a>              </Typography>
-           <Typography variant="body2" color="textSecondary" component="p">
+           <Typography variant="body2" color="textSecondary" component="p"style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
              {workout.description}
            </Typography>
            <YouTube videoId={getVideoId(workout.video_url)} opts={opts} />
