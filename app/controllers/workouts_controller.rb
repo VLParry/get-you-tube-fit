@@ -14,21 +14,6 @@ class WorkoutsController < ApplicationController
         end
     end
 
-    # def create  
-    #     # user = User.find(params[:user_id])
-    #     workout = @current_user.workouts.create!(workout_params)
-    #     tag_ids = params[:tag_ids]
-    #     workout.tag_ids = tag_ids
-    #     if workout.save
-    #         tag_ids.each do |tag_id|
-    #             tag = Tag.find(tag_id)
-    #             tag.workouts << workout
-    #         end
-    #         render json: workout, include: :tags, status: :created
-    #     else
-    #         render json: { errors: @workout.errors.full_messages }, status: :unprocessable_entity
-    #     end
-    # end
     def create
         workout = @current_user.workouts.build(workout_params)
       
@@ -36,7 +21,6 @@ class WorkoutsController < ApplicationController
           # Add tags to the workout
           tag_ids = params[:tag_ids]
           tag_ids.each do |tag_id|
-            workout.tags << Tag.find(tag_id)
             WorkoutTag.create(workout: workout, tag_id: tag_id)
           end
       

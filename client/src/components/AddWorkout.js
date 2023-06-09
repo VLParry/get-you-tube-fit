@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
@@ -28,7 +27,6 @@ const AddWorkout = ({tags, handleAddWorkout}) => {
   const [videoUrl, setVideoUrl] = useState("")
   const [selectedTags, setSelectedTags] = useState([]);
   const [errors, setErrors] = useState([])
-  const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
 
   
@@ -41,7 +39,6 @@ const AddWorkout = ({tags, handleAddWorkout}) => {
       cooldown: cooldown === "yes" ? true : false,
       duration,
       video_url: videoUrl,
-      // tags: selectedTags
       tag_ids: selectedTags
     }
     fetch("/workouts", {
@@ -55,17 +52,19 @@ const AddWorkout = ({tags, handleAddWorkout}) => {
       if (r.ok) {
         setErrors([])
         r.json().then((addedWorkout) => {
-          console.log(addedWorkout)
-          handleAddWorkout(addedWorkout)
-        navigate('/workouts')
+          handleAddWorkout(addedWorkout);
+        setOpen(false);
         });
       }
       else{
-        r.json().then((err) => setErrors(err.errors));
-      }
-    })
+        r.json().then((err) => {
+          setErrors(err.errors);
+          setOpen(true); 
+          // Keep the modal open on error
+        });
+    }})
+
 }
-console.log('selected tags', selectedTags)
 
 
   return (

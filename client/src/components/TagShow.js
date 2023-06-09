@@ -8,6 +8,20 @@ const TagShow = () => {
   const { id } = useParams();
   const [tagShow, setTagShow] = useState(null);
 
+  const opts = {
+    height: '180',
+    width: '320',
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+const getVideoId = (videoUrl) => {
+    const pattern = /youtube.com\/watch\?v=(\w+)/;
+    const match = videoUrl.match(pattern);
+    return match ? match[1] : '';
+}
+
   useEffect(() => {
     fetch(`/tags/${id}`)
       .then((response) => response.json())
@@ -23,19 +37,7 @@ const TagShow = () => {
     return <p>No workouts found.</p>;
   }
 
-  const opts = {
-    height: '180',
-    width: '320',
-    playerVars: {
-      autoplay: 0,
-    },
-  };
 
-const getVideoId = (videoUrl) => {
-    const pattern = /youtube.com\/watch\?v=(\w+)/;
-    const match = videoUrl.match(pattern);
-    return match ? match[1] : '';
-}
 
   return (
     <div>
