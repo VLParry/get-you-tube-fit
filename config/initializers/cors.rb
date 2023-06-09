@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'example.com'
+    origins 'localhost:4000'  # Update the origin to match your front-end address
 
     resource '*',
       headers: :any,
