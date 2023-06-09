@@ -24,8 +24,8 @@ const TagShow = () => {
   }
 
   const opts = {
-    height: '360',
-    width: '640',
+    height: '180',
+    width: '320',
     playerVars: {
       autoplay: 0,
     },
@@ -39,15 +39,18 @@ const getVideoId = (videoUrl) => {
 
   return (
     <div>
+      <Typography variant="h4" component="h1" >
+        {tagShow.name}
+      </Typography>
       <Grid container spacing={2} style={{ display: 'flex' }} >
       {tagShow.workouts.map((workout) => (
 
        <Grid item xs={12} sm={6} md={4}>
        <Card>
          <CardContent>
-           <Typography gutterBottom variant="h5" component="h2">
+           <Typography gutterBottom variant="h5" component="h2" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
            <a href={`/workouts/${workout.id}`}>{workout.title}</a>              </Typography>
-           <Typography variant="body2" color="textSecondary" component="p">
+           <Typography variant="body2" color="textSecondary" component="p" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
              {workout.description}
            </Typography>
            <YouTube videoId={getVideoId(workout.video_url)} opts={opts} />
