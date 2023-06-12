@@ -63,8 +63,6 @@ function App() {
     const handleDeleteWorkout = (id) => {
       const updatedWorkouts = workouts.filter((deletedWorkout) => deletedWorkout.id !== id)
       const updatedUserWorkouts = user.workouts.filter((deletedUserWorkout) => deletedUserWorkout.id !== id)
-      console.log(typeof id)
-      console.log(updatedUserWorkouts)
       setUser({...user, workouts: updatedUserWorkouts})
       setWorkouts(updatedWorkouts)
      
@@ -85,6 +83,7 @@ function App() {
       })
       setWorkouts(updatedWorkouts);
       setUser({...user, workouts: updatedUserWorkouts})
+      
     };
 
   return (

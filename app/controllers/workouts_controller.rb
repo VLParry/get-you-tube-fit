@@ -31,16 +31,26 @@ class WorkoutsController < ApplicationController
       end
 
 
-
-    def update
+      def update
         workout = find_workout
+      
         if workout.user == @current_user
-            workout.update(workout_params)
-            render json: workout, status: :accepted 
+          if workout.update(workout_params)
+            # Update tags of the workout
+            tag_ids = params[:workout][:tag_ids]
+            workout.tags = Tag.where(id: tag_ids) if tag_ids.present?
+      
+            render json: workout, include: :tags, status: :ok
+          else
+            render json: { errors: workout.errors.full_messages }, status: :unprocessable_entity
+          end
         else
-            render json: { error: 'Not Authorized' }, status: :unauthorized
+          render json: { error: 'Not Authorized' }, status: :unauthorized
         end
-    end
+      end
+      
+  
+      
 
     def destroy
         workout = find_workout

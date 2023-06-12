@@ -20,6 +20,7 @@ import { Card, CardContent, Grid} from "@mui/material";
 const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
     const [workout, setWorkout] = useState(null);
     const [errors, setErrors] = useState([])
+    const [hasError, setHasError] = useState(false)
     const { id } = useParams();
     const {user} = useUserContext()
     const [isLoading, setIsLoading] = useState(true);
@@ -31,10 +32,26 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
       warmup: '',
       cooldown: '',
       duration: '',
-      videoUrl: '',
-      tags: []  
+      video_url: '',
+      tags: []
+      // tag_ids: []  
+      // changed this from tags
     });
     const nav = useNavigate();
+
+
+    //this is the workout object that i can successfully update the associated workout tags with on postman
+    // {
+//   "workout": {
+//     "title": "Updated TEST",
+//     "description": "Updated TES",
+//     "duration": 50,
+//     "warmup": true,
+//     "cooldown": true,
+//     "video_url": "https://www.youtube.com/watch?v=abcd1234",
+//     "tag_ids": [ 6]
+//   }
+// }
 
     const opts = {
       height: '360',
@@ -64,28 +81,33 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
           setWorkout(data);
           setIsLoading(false);
           // Set initial values for the form fields based on the fetched workout data
+          //MUI was being annoying about values 
         setEditedWorkout({
           title: data.title,
           description: data.description,
           warmup: data.warmup ? 'yes' : 'no',
           cooldown: data.cooldown ? 'yes' : 'no',
           duration: data.duration.toString(),
-          videoUrl: data.video_url,
+          video_url: data.video_url,
           tags: data.tags.map(tag => tag.id.toString())
         }); 
         setSelectedTags(data.tags.map(tag => tag.id.toString()))
         })
         .catch((error) => {
+          setHasError(true)
+          setIsLoading(false)
           setErrors([error.message]);
         });
     }, [id, user]);
 
 
   
-    if (workout === null) {
+    if (isLoading) {
       return <div>Loading...</div>;
     }
-  
+    if (hasError) {
+      return <div>Workout not found</div>
+    }
 
 
     function deleteWorkoutClick(){
@@ -103,13 +125,24 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
   }
 
   function editWorkoutClick() {
-    const newEditedWorkout = {...editedWorkout, warmup: editedWorkout.warmup === "yes", cooldown: editedWorkout.cooldown === "yes", tags: selectedTags}
+    const newEditedWorkout = {
+      ...editedWorkout, 
+      warmup: editedWorkout.warmup === "yes", 
+      cooldown: editedWorkout.cooldown === "yes", 
+      //radio button saves a string value and we need to turn it into a boolean so that backend can accept it
+      tags: selectedTags,
+      tag_ids: selectedTags,
+      id: parseInt(id)
+       
+    };
+    //here we override the key value pairs to have the values that our backend expects
+    
     fetch(`/workouts/${id}`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
     }, 
-    body: JSON.stringify(newEditedWorkout)
+    body: JSON.stringify({workout: newEditedWorkout})
   }) 
     .then((r) =>{
       if(r.ok) {
@@ -267,7 +300,7 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
      type="link" 
      placeholder="video link" 
      id="videoUrl" 
-     value={editedWorkout.videoUrl}
+     value={editedWorkout.video_url}
      name="videoUrl" 
      onChange={(e) =>
       setEditedWorkout({
@@ -283,8 +316,10 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
                   <Checkbox
                     key={tag.id}
                     value={tag.id}
+                    //check box from MUI changes the value to string so we had to do string matching 
                     label={tag.name}
                     checked={selectedTags.includes(tag.id.toString())}
+                    //this shows the tags that were already selected for the workout
                     onChange={(e) => {
                       if (selectedTags.includes(e.target.value)) {
                         const filteredTags = selectedTags.filter(
@@ -298,6 +333,9 @@ const WorkoutShow = ( {handleDeleteWorkout, handleEditWorkout, tags }) => {
                   />
                 ))}
               </FormGroup>
+              {errors.map((err) => (
+            <p key={err} style={{ color: "red" }}>{err}</p>
+          ))}
           <Button onClick={editWorkoutClick}>Save</Button></>}
           <div style={{ marginTop: 10 }}>
             <YouTube 
