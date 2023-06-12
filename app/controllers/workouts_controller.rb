@@ -16,13 +16,14 @@ class WorkoutsController < ApplicationController
 
     def create
         workout = @current_user.workouts.build(workout_params)
-      
+      # creates a new Workout object associated with the current user. the build method instantiates the object and assigns a user id foreign key
         if workout.save
           # Add tags to the workout
           tag_ids = params[:tag_ids]
           tag_ids.each do |tag_id|
             WorkoutTag.create(workout: workout, tag_id: tag_id)
           end
+          #  creates a new WorkoutTag object and associates it with the workout and tag_id. This establishes a relationship between the workout and its associated tags. Each tag_id is used to create a separate WorkoutTag record.
       
           render json: workout, include: :tags, status: :created
         else
@@ -38,8 +39,9 @@ class WorkoutsController < ApplicationController
           if workout.update(workout_params)
             # Update tags of the workout
             tag_ids = params[:workout][:tag_ids]
+            # retrieves an array of tag_ids from the request parameters, specifically from the workout parameter.
             workout.tags = Tag.where(id: tag_ids) if tag_ids.present?
-      
+            # updates the associated tags of the workout. If tag_ids are present in the request, it fetches the corresponding Tag records using the where method and assigns them to the workout object's tags association. This allows the tags associated with the workout to be updated.
             render json: workout, include: :tags, status: :ok
           else
             render json: { errors: workout.errors.full_messages }, status: :unprocessable_entity

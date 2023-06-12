@@ -24,8 +24,10 @@ const getVideoId = (videoUrl) => {
 
   useEffect(() => {
     fetch(`/tags/${id}`)
-      .then((response) => response.json())
-      .then((data) => setTagShow(data))
+      .then((r) => r.json())
+      .then((data) => {
+      setTagShow(data)
+    })
       .catch((error) => console.error('Error:', error));
   }, [id]);
 
@@ -33,7 +35,7 @@ const getVideoId = (videoUrl) => {
     return <p>Loading...</p>;
   }
 
-  if (tagShow.workouts.length === 0) {
+  if (!tagShow.workouts || tagShow.workouts.length === 0) {
     return <p>No workouts found.</p>;
   }
 
@@ -47,7 +49,7 @@ const getVideoId = (videoUrl) => {
       <Grid container spacing={2} style={{ display: 'flex' }} >
       {tagShow.workouts.map((workout) => (
 
-       <Grid item xs={12} sm={6} md={4}>
+       <Grid item xs={12} sm={6} md={4} key={workout.id}>
        <Card>
          <CardContent>
            <Typography gutterBottom variant="h5" component="h2" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
